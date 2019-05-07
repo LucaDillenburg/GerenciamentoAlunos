@@ -1,0 +1,59 @@
+package aluno;
+
+public class Aluno
+{
+	protected String ra;
+	protected String nome;
+	protected String email;
+	
+	public Aluno(String ra, String nome, String email)
+	{
+		this.ra = ra;
+		this.nome = nome;
+		this.email = email;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		int result = 1;
+		result = 31 * result + ((email == null) ? 0 : email.hashCode());
+		result = 31 * result + ((nome == null) ? 0 : nome.hashCode());
+		result = 31 * result + ((ra == null) ? 0 : ra.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Aluno other = (Aluno) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (ra == null) {
+			if (other.ra != null)
+				return false;
+		} else if (!ra.equals(other.ra))
+			return false;
+		return true;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Aluno [ra=" + ra + ", nome=" + nome + ", email=" + email + "]";
+	}
+}

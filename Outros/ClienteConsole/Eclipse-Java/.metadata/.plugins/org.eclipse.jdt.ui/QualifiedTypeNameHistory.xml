@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.net.URLEncoder"/>
+<fullyQualifiedTypeName name="java.nio.charset.StandardCharsets"/>
+<fullyQualifiedTypeName name="java.net.URL"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="teste.Teste"/>
+<fullyQualifiedTypeName name="aluno.Aluno"/>
+<fullyQualifiedTypeName name="clientews.ClienteWS"/>
+<fullyQualifiedTypeName name="java.io.OutputStreamWriter"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,50 @@
+package teste;
+
+import java.io.*;
+import java.net.*;
+
+public class Teste
+{
+	public static void DO() throws MalformedURLException, IOException
+	{
+		System.out.println(Teste.incluiAluno("http://localhost:8080/Escola/webresources/escola/a"));
+	}
+	
+	public static String incluiAluno(String url) throws MalformedURLException, IOException
+	{    
+        URL objURL = new URL(url);
+        HttpURLConnection con = (HttpURLConnection)objURL.openConnection();
+        
+        con.setDoOutput(true);
+        
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Type", "application/json");
+        
+        //Formata em json o item da lista a ser inserido com POST
+        String output = "{\"ra\":\"17188\",\"nome\":\"LucaDillenburg\",\"email\":\"asdf\"}";
+        
+        //Pega a conexão aberta em con (getOutputStream()) e faz OutputStream, ouseja, faz o fluxo de dados do cliente para o servidor
+        OutputStream os = con.getOutputStream();
+        
+        //Escreve o output tranformado em Bytes        
+        os.write(output.getBytes());
+        
+        
+        int responseCode = con.getResponseCode();
+        //Se retornar 200 significa que deu certo
+        
+        System.out.println("Response Code: "+ responseCode);
+        
+        //Armazena o retorno do método POST do servidor        
+        BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream())); 
+        StringBuffer response = new StringBuffer();        
+        String inputLine;
+        
+        while((inputLine = br.readLine())!=null)
+            response.append(inputLine);
+        
+        br.close();
+        con.disconnect();
+        return response.toString();
+    }
+}
