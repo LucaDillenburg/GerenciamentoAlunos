@@ -29,10 +29,10 @@ public class Alunos
         }
     }
             
-    public static Aluno getAluno (String ra) throws Exception
+    public static Aluno getAluno (String ra) throws IllegalArgumentException, SQLException
     {
         if (ra==null)
-            throw new Exception ("RA nao fornecido");
+            throw new IllegalArgumentException ("RA nao fornecido");
 
         String sql = "select nome, email from aluno where ra = ?";
         BDSQLServer.COMANDO.prepareStatement (sql);
@@ -41,35 +41,28 @@ public class Alunos
         BDSQLServer.COMANDO.setString(1, ra);
         MeuResultSet result = (MeuResultSet)BDSQLServer.COMANDO.executeQuery();
         if (!result.first()) //resultado vazio
-            throw new Exception ("Nao existe nenhum aluno com esse RA!");;
+            throw new IllegalArgumentException ("Nao existe nenhum aluno com esse RA!");;
         return new Aluno(ra, result.getString("nome"), result.getString("email"));
     }
 
-    public static Aluno[] getAlunosPorNome (String nome) throws Exception
+    public static Aluno[] getAlunosPorNome (String nome) throws SQLException, IllegalArgumentException
     {
         if (nome==null)
-            throw new Exception ("Nome nao fornecido");
+            throw new IllegalArgumentException ("Nome nao fornecido");
 
-        try
-        {
-            String sql = "select * from aluno where nome = ?";
-            BDSQLServer.COMANDO.prepareStatement (sql);
+        String sql = "select * from aluno where nome = ?";
+        BDSQLServer.COMANDO.prepareStatement (sql);
 
-            //parametros
-            BDSQLServer.COMANDO.setString(1, nome);
+        //parametros
+        BDSQLServer.COMANDO.setString(1, nome);
 
-            return Alunos.vetorAlunosFromRestult((MeuResultSet)BDSQLServer.COMANDO.executeQuery ());
-        }
-        catch (SQLException erro)
-        {
-            throw new Exception ("Erro ao procurar aluno!");
-        }
+        return Alunos.vetorAlunosFromRestult((MeuResultSet)BDSQLServer.COMANDO.executeQuery ());
     }
 
-    public static void inserir (Aluno aluno) throws Exception
+    public static void inserir (Aluno aluno) throws SQLException, IllegalArgumentException
     {
         if (aluno==null)
-            throw new Exception ("Aluno nao fornecido");
+            throw new IllegalArgumentException ("Aluno nao fornecido");
 
         try
         {
@@ -84,16 +77,16 @@ public class Alunos
             BDSQLServer.COMANDO.executeUpdate ();
             BDSQLServer.COMANDO.commit();
         }
-        catch (SQLException erro)
+        catch (SQLDataException erro) //quando acontece duplicacao de primary key, essa excecao eh lancada. as outras excecoes serao lancadas normalmente
         {
-            throw new Exception ("Jah existe um aluno com esse RA!");
+            throw new IllegalArgumentException ("Jah existe um aluno com esse RA!");
         }
     }
 
-    public static void deletar (String ra) throws Exception
+    public static void deletar (String ra) throws SQLException, IllegalArgumentException
     {
         if (ra==null)
-            throw new Exception ("RA nao fornecido");
+            throw new IllegalArgumentException ("RA nao fornecido");
 
         String sql = "delete from aluno where ra = ?";
         BDSQLServer.COMANDO.prepareStatement (sql);
@@ -103,17 +96,15 @@ public class Alunos
 
         int qtdRowsChanged = BDSQLServer.COMANDO.executeUpdate ();
         if (qtdRowsChanged <= 0)
-            throw new Exception ("Aluno nao existe!");
+            throw new IllegalArgumentException ("Aluno nao existe!");
 
         BDSQLServer.COMANDO.commit();
     }
 
-    public static void alterar (Aluno aluno) throws Exception
+    public static void alterar (Aluno aluno) throws SQLException, IllegalArgumentException
     {
         if (aluno==null)
-            throw new Exception ("Aluno nao fornecido");
-        if (Alunos.getAluno(aluno.getRA()) == null)
-            throw new Exception ("Aluno nao existe");
+            throw new IllegalArgumentException ("Aluno nao fornecido");
 
         String sql = "update aluno set nome = ?, email = ? where ra = ?";
         BDSQLServer.COMANDO.prepareStatement (sql);
@@ -125,7 +116,7 @@ public class Alunos
 
         int qtdRowsChanged = BDSQLServer.COMANDO.executeUpdate ();
         if (qtdRowsChanged <= 0)
-            throw new Exception ("Aluno nao existe!");
+            throw new IllegalArgumentException ("Aluno nao existe!");
 
         BDSQLServer.COMANDO.commit();
     }

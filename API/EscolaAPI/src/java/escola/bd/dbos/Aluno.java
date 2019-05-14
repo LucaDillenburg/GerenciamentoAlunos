@@ -5,8 +5,6 @@
  */
 package escola.bd.dbos;
 
-import java.io.Serializable;
-
 /**
  *
  * @author u17188
@@ -24,40 +22,40 @@ public class Aluno implements Cloneable
         this.email = "asdfsadf";
     }
     
-    public Aluno (String ra, String nome, String email) throws Exception
+    public Aluno (String ra, String nome, String email) throws IllegalArgumentException
     {
         this.setRa (ra);
         this.setNome (nome);
         this.setEmail (email);
     }
 
-    public void setRa (String ra) throws Exception
+    public void setRa (String ra) throws IllegalArgumentException
     {
-        //if (ra.length() != 5)
-        //    throw new Exception ("RA invalido");
+        if (ra.length() != 5)
+            throw new IllegalArgumentException ("RA invalido");
 
-        //try
-        //{
-        //    Integer.parseInt(ra);
-        //}
-        //catch(Exception ex)
-        //{throw new Exception ("RA invalido");}
+        try
+        {
+            Integer.parseInt(ra);
+        }
+        catch(Exception ex)
+        { throw new IllegalArgumentException ("RA invalido"); }
 
         this.ra = ra;
     }
 
-    public void setNome (String nome) throws Exception
+    public void setNome (String nome) throws IllegalArgumentException
     {
         if (nome == null || nome.equals(""))
-            throw new Exception ("Nome invalido");
+            throw new IllegalArgumentException ("Nome invalido");
 
         this.nome = nome;
     }
 
-    public void setEmail (String email) throws Exception
+    public void setEmail (String email) throws IllegalArgumentException
     {
         if (email == null || email.equals(""))
-            throw new Exception ("Email invalido");
+            throw new IllegalArgumentException ("Email invalido");
 
         this.email = email;
     }
