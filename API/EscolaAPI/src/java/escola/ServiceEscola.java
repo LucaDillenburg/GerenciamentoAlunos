@@ -9,6 +9,7 @@ import escola.bd.daos.Alunos;
 import escola.bd.dbos.Aluno;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -43,9 +44,15 @@ public class ServiceEscola {
     @GET
     @Path("/getAlunos")
     @Produces(MediaType.APPLICATION_JSON)
-    public Aluno[] getAlunos()
+    public Aluno[] getAlunos() throws WebApplicationException
     {
-        return Alunos.getAlunos();
+        try
+        {
+            return Alunos.getAlunos();
+        }catch(SQLException e)
+        {
+            throw new WebApplicationException(Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build());
+        }
     }
     
     //GET , onde o RA do aluno é passado como parâmetro
@@ -58,9 +65,13 @@ public class ServiceEscola {
         try
         {
             return Alunos.getAluno(ra);
-        }catch(Exception e)
+        }catch(IllegalArgumentException e)
         {
             throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build());
+        }
+        catch(SQLException e)
+        {
+            throw new WebApplicationException(Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build());
         }
     }
     
@@ -84,9 +95,13 @@ public class ServiceEscola {
         try
         {
             return Alunos.getAlunosPorNome(nomeAluno);
-        }catch(Exception e)
+        }catch(IllegalArgumentException e)
         {
             throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build());
+        }
+        catch(SQLException e)
+        {
+            throw new WebApplicationException(Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build());
         }
     }
     
@@ -99,9 +114,13 @@ public class ServiceEscola {
         try
         {
             Alunos.deletar(ra);
-        }catch(Exception e)
+        }catch(IllegalArgumentException e)
         {
             throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build());
+        }
+        catch(SQLException e)
+        {
+            throw new WebApplicationException(Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build());
         }
     }
     
@@ -115,9 +134,13 @@ public class ServiceEscola {
         try
         {
             Alunos.inserir(aluno);
-        }catch(Exception e)
+        }catch(IllegalArgumentException e)
         {
             throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build());
+        }
+        catch(SQLException e)
+        {
+            throw new WebApplicationException(Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build());
         }
     }
   
@@ -131,9 +154,13 @@ public class ServiceEscola {
         try
         {
             Alunos.alterar(aluno);
-        }catch(Exception e)
+        }catch(IllegalArgumentException e)
         {
             throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build());
+        }
+        catch(SQLException e)
+        {
+            throw new WebApplicationException(Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build());
         }
     }
 

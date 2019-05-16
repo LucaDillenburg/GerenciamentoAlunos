@@ -1,20 +1,15 @@
-INDEX VERSION 1.131+C:\Users\u17188\Desktop\Projeto-API-e-Cliente-Android\Outros\ClienteConsole\Eclipse-Java\.metadata\.plugins\org.eclipse.jdt.core
-3705452257.index
-1897928139.index
-3498974549.index
-58444662.index
-1188785453.index
-899518542.index
-3079686767.index
-904289187.index
-1878111493.index
-2953298812.index
-4030373465.index
-402782763.index
-1794327708.index
-3517127072.index
-3698278747.index
-3431489974.index
-3861206012.index
-972666350.index
-434535315.index
+INDEX VERSION 1.131+/home/luca_dillenburg/Documents/Projetos/Escola/Projetinho-API-Cliente-Android/Clientes/ClienteConsole/Eclipse-Java/.metadata/.plugins/org.eclipse.jdt.core
+1507498603.index
+1481209375.index
+819200855.index
+4198782150.index
+2836956976.index
+1282123451.index
+3598126756.index
+1714686151.index
+3173898146.index
+1045668325.index
+2523361205.index
+3478033829.index
+1727435735.index
+3582630877.index

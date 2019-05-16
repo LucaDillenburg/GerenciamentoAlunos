@@ -15,18 +15,12 @@ import escola.bd.dbos.*;
  */
 public class Alunos
 {
-    public static Aluno[] getAlunos()
+    public static Aluno[] getAlunos() throws SQLException
     {
-        try
-        {
-            String sql = "select * from aluno";
-            BDSQLServer.COMANDO.prepareStatement (sql);
+        String sql = "select * from aluno";
+        BDSQLServer.COMANDO.prepareStatement (sql);
 
-            return Alunos.vetorAlunosFromRestult((MeuResultSet)BDSQLServer.COMANDO.executeQuery ());
-        }
-        catch (SQLException erro)
-        { return null; //nao vai chegar aqui
-        }
+        return Alunos.vetorAlunosFromRestult((MeuResultSet)BDSQLServer.COMANDO.executeQuery ());
     }
             
     public static Aluno getAluno (String ra) throws IllegalArgumentException, SQLException
@@ -77,9 +71,12 @@ public class Alunos
             BDSQLServer.COMANDO.executeUpdate ();
             BDSQLServer.COMANDO.commit();
         }
-        catch (SQLDataException erro) //quando acontece duplicacao de primary key, essa excecao eh lancada. as outras excecoes serao lancadas normalmente
+        catch (SQLException erro)
         {
-            throw new IllegalArgumentException ("Jah existe um aluno com esse RA!");
+            if (erro.getSQLState().equals("23000")) //quando acontece duplicacao de primary key
+                throw new IllegalArgumentException ("Jah existe um aluno com esse RA!");
+            else //as outras excecoes serao lancadas normalmente
+                throw erro;
         }
     }
 
