@@ -1,0 +1,2 @@
+Para conseguir o IP da maquina que estah rodando o servidor: 
+ - hostname -I (em casa eh o endereco que comeca com "143.106")
