@@ -14,11 +14,11 @@ public class ClienteWSNoException extends ClienteWS
     /**
      * A unica diferenca desse metodo para o mesmo metodo da classe pai eh que se a Response do servidor nao for OK, ele da throw APIException
     */
-    public static APIResponse chamarMetodoServidor(String url, String tipoMetodo, boolean temRetorno, Object... arguments) throws IOException
+    public static APIResponse chamarMetodoServidor(String url, String tipoMetodo, boolean endpointEhVoid, Object... arguments) throws IOException
     {
         try
         {
-            return ClienteWS.chamarMetodoServidor(url, tipoMetodo, temRetorno, arguments);
+            return ClienteWS.chamarMetodoServidor(url, tipoMetodo, endpointEhVoid, arguments);
         }catch(APIException apiException)
         {
             return apiException.getResponse();

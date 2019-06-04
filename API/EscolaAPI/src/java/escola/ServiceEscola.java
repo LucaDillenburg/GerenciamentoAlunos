@@ -106,7 +106,7 @@ public class ServiceEscola {
     }
     
     //DELETE, para excluir o aluno do banco de dados.
-    @GET
+    @PUT // JAR-RS nao aceita metodo @Delete
     @Path("/excluirAluno/{ra}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void excluirAluno(@PathParam("ra")String ra) throws WebApplicationException

@@ -22,6 +22,7 @@ import br.unicamp.clienteescola.requisicoes_ao_servidor.cliente.api_exception.AP
 import br.unicamp.clienteescola.requisicoes_ao_servidor.cliente.api_response.APIResponse;
 import br.unicamp.clienteescola.requisicoes_ao_servidor.cliente.clientews.ClienteWS;
 import br.unicamp.clienteescola.requisicoes_ao_servidor.cliente_android.async_task.AsyncTaskWithThrowable;
+import br.unicamp.clienteescola.requisicoes_ao_servidor.cliente_android.cliente_escola.ClienteEscola;
 import br.unicamp.clienteescola.requisicoes_ao_servidor.cliente_android.data_for_request.DataForRequest;
 
 public class AsyncTaskCRUDAlunos extends AsyncTaskWithThrowable<DataForRequest, Void, APIResponse> {
@@ -34,14 +35,10 @@ public class AsyncTaskCRUDAlunos extends AsyncTaskWithThrowable<DataForRequest, 
     {
         super();
         this.clientActivity = clientActivity;
-
-        final String IP = "143.106.200.139";
-        this.URL_BASE = "http://" + IP + ":8080/build/webresources/escola/";
     }
 
 
     //background work
-    protected final String URL_BASE;
     @Override
     protected APIResponse doInBackground(DataForRequest... parametrosAsyncTasks) throws IOException, APIException {
         this.parametros = parametrosAsyncTasks[0];
@@ -50,27 +47,23 @@ public class AsyncTaskCRUDAlunos extends AsyncTaskWithThrowable<DataForRequest, 
         switch (this.parametros.getOperacao())
         {
             case CONSULTAR_ALUNOS: //Vetor de Objects: vazio
-                apiResponse = ClienteWS.chamarMetodoServidor(URL_BASE + "getAlunos/", "GET");
+                apiResponse = ClienteEscola.consultarAlunos();
                 break;
 
             case CONSULTAR_ALUNO: //Vetor de Objects: [0]:RA
-                apiResponse = ClienteWS.chamarMetodoServidor(URL_BASE + "getAluno/" +
-                        (String)this.parametros.getOutrosObjetos()[0]/*ra do aluno a ser consultado*/, "GET");
+                apiResponse = ClienteEscola.consultarAluno((String)this.parametros.getOutrosObjetos()[0]/*ra do aluno a ser consultado*/);
                 break;
 
             case INSERIR: //Vetor de Objects: [0]:Aluno
-                ClienteWS.chamarMetodoServidor(URL_BASE + "incluirAluno", "POST", false,
-                        (Aluno)this.parametros.getOutrosObjetos()[0]/*aluno a ser incluido*/);
+                apiResponse = ClienteEscola.inserir((Aluno)this.parametros.getOutrosObjetos()[0]/*aluno a ser incluido*/);
                 break;
 
             case ALTERAR: //Vetor de Objects: [0]:Aluno
-                ClienteWS.chamarMetodoServidor(URL_BASE + "alterarAluno", "PUT", false,
-                        (Aluno)this.parametros.getOutrosObjetos()[0]/*aluno a ser alterado*/, false);
+                apiResponse = ClienteEscola.alterar((Aluno)this.parametros.getOutrosObjetos()[0]/*aluno a ser alterado*/);
                 break;
 
             case EXCLUIR: //Vetor de Objects: [0]:RA
-                ClienteWS.chamarMetodoServidor(URL_BASE + "excluirAluno/" + (String)this.parametros.getOutrosObjetos()[0]/*ra do aluno a ser excluido*/,
-                        "GET", false);
+                apiResponse = ClienteEscola.excluir((String)this.parametros.getOutrosObjetos()[0]/*ra do aluno a ser excluido*/);
                 break;
         }
 
@@ -85,6 +78,7 @@ public class AsyncTaskCRUDAlunos extends AsyncTaskWithThrowable<DataForRequest, 
         {
             final APIResponse apiResponse = resultHolder.getResult();
 
+            String resultado = "";
             switch (this.parametros.getOperacao())
             {
                 case CONSULTAR_ALUNOS:
@@ -104,17 +98,19 @@ public class AsyncTaskCRUDAlunos extends AsyncTaskWithThrowable<DataForRequest, 
                     break;
 
                 case INSERIR:
-                    this.clientActivity.setResultado("Aluno incluido com sucesso!");
+                    resultado = "Aluno incluido com sucesso!";
                     break;
 
                 case ALTERAR:
-                    this.clientActivity.setResultado("Aluno alterado com sucesso!");
+                    resultado = "Aluno alterado com sucesso!";
                     break;
 
                 case EXCLUIR:
-                    this.clientActivity.setResultado("Aluno excluido com sucesso!");
+                    resultado = "Aluno excluido com sucesso!";
                     break;
             }
+
+            this.clientActivity.setResultado(resultado);
         }
         catch(APIException | IOException exception)
         {

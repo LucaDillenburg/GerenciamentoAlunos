@@ -1,0 +1,6 @@
+Para que o cliente Android se conecte com o servidor corretamente é necessário colocar o IP da nova máquina na qual a API estará rodando. Mudanças necessárias:
+ - mudar o IP no arquivo res/xml/network_security_config.xml
+ - mudar o atributo IP na classe ClienteEscola
+(ps: se a porta da API for modificada, também será necessário modificar o atributo PORTA)
+
+Para conseguir o IP da maquina que estah rodando o servidor (para Linux): curl ifconfig.me

@@ -21,9 +21,10 @@ public class ClienteWS
     //requisicao
 	public static APIResponse chamarMetodoServidor(String url, String tipoMetodo) throws IOException, APIException
 	{
-		return ClienteWS.chamarMetodoServidor(url, tipoMetodo, true);
+		return ClienteWS.chamarMetodoServidor(url, tipoMetodo, false);
 	}
-	public static APIResponse chamarMetodoServidor(String url, String tipoMetodo, boolean temRetorno, Object... arguments) throws IOException, APIException
+
+	public static APIResponse chamarMetodoServidor(String url, String tipoMetodo, boolean endpointEhVoid, Object... arguments) throws IOException, APIException
     {
         //URL
         URL objURL = new URL(url);
@@ -58,7 +59,7 @@ public class ClienteWS
 
         //retorno do metodo
         String jsonReturn = "";
-        if (temRetorno || !isResponseOK)
+        if (!endpointEhVoid || !isResponseOK)
         {
         	//inicializar stream reader (eh diferente para status OK e status Erro)
         	BufferedReader bufferedReader;
