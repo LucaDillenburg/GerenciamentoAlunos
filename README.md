@@ -1,5 +1,13 @@
-### Projetinho back-end e front-end com a API em Java e Cliente em Android Studio. Faz o CRUD dos alunos.
+# Projetinho Full Stack (API em Java e cliente em Android)
+Projetinho de CRUD com a API em Java (JAX-RS) e Cliente em Android (usando Android Studio). Foco na qualidade e elegância da estruturação e resposta da API e consumo da mesma pelo Android.
+</br>
 
-## Autores
-Luca Assumpção Dillenburg <br/>
-Henrique Soares Toto
+### Objetivo
+Fazer uma API http com operações simples com a melhor qualidade e estruturação possível.
+</br>
+
+### Pontos fortes
+ - Lançar exceçõesno servidor com o response code adequado
+ - Fazer request a API de maneira elegante
+ - Tratar, no cliente, exceções lançadas no servidor (considerando o response code)
+ - Implementar/usar um AsyncTask que consiga tratar exceções do método doInBackground
