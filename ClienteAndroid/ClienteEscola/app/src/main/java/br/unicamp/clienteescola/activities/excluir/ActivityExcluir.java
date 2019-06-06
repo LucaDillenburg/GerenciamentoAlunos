@@ -8,6 +8,7 @@ import android.widget.EditText;
 import br.unicamp.clienteescola.R;
 import br.unicamp.clienteescola.activities.ActivityConsomeServico;
 import br.unicamp.clienteescola.activities.alterar.ActivityAlterar;
+import br.unicamp.clienteescola.requisicoes_ao_servidor.aluno.Aluno;
 import br.unicamp.clienteescola.requisicoes_ao_servidor.cliente_android.async_task.AsyncTaskCRUDAlunos;
 import br.unicamp.clienteescola.requisicoes_ao_servidor.cliente_android.data_for_request.DataForRequest;
 
@@ -27,8 +28,17 @@ public class ActivityExcluir extends ActivityConsomeServico {
             @Override
             public void onClick(View view) {
                 final String ra = ((EditText)findViewById(R.id.edtRA)).getText().toString();
-                AsyncTaskCRUDAlunos crudAlunos = new AsyncTaskCRUDAlunos(ActivityExcluir.this);
-                crudAlunos.execute(new DataForRequest(DataForRequest.OperacaoEscola.EXCLUIR, ra));
+
+                try {
+                    Aluno aluno = new Aluno();
+                    aluno.setRA(ra); //verifica se eh um ra valido
+
+                    AsyncTaskCRUDAlunos crudAlunos = new AsyncTaskCRUDAlunos(ActivityExcluir.this);
+                    crudAlunos.execute(new DataForRequest(DataForRequest.OperacaoEscola.EXCLUIR, ra));
+                }catch(Exception e)
+                {
+                    setMsgErro(e.getMessage());
+                }
             }
         });
 

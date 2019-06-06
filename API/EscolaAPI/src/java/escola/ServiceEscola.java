@@ -128,7 +128,6 @@ public class ServiceEscola {
     @POST
     @Path("/incluirAluno")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public void inserirAluno(Aluno aluno) throws WebApplicationException
     {
         try
@@ -148,7 +147,6 @@ public class ServiceEscola {
     @PUT
     @Path("/alterarAluno")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public void alterarAluno(Aluno aluno) throws WebApplicationException
     {
         try

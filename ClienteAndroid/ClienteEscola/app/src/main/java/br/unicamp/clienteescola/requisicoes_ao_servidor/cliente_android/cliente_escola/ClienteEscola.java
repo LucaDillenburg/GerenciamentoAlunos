@@ -11,7 +11,7 @@ import static br.unicamp.clienteescola.requisicoes_ao_servidor.cliente_android.d
 
 public class ClienteEscola {
 
-    protected static final String IP = "143.106.200.100";
+    protected static final String IP = "143.106.200.51";
     protected static final String PORTA = "8080";
     protected static final String URL_BASE = "http://" + IP + ":" + PORTA + "/build/webresources/escola/";
 

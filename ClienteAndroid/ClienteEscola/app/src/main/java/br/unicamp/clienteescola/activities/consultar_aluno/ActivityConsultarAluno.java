@@ -29,8 +29,17 @@ public class ActivityConsultarAluno extends ActivityConsomeServico {
                 public void onClick(View v) {
                     // Chamar AsyncTask que fara a listagem dos alunos
                     final String ra = ((EditText)findViewById(R.id.edtRA)).getText().toString();
-                    AsyncTaskCRUDAlunos asyncTask = new AsyncTaskCRUDAlunos(ActivityConsultarAluno.this);
-                    asyncTask.execute(new DataForRequest(DataForRequest.OperacaoEscola.CONSULTAR_ALUNO, ra));
+
+                    try {
+                        Aluno aluno = new Aluno();
+                        aluno.setRA(ra); //verifica se eh um ra valido
+
+                        AsyncTaskCRUDAlunos asyncTask = new AsyncTaskCRUDAlunos(ActivityConsultarAluno.this);
+                        asyncTask.execute(new DataForRequest(DataForRequest.OperacaoEscola.CONSULTAR_ALUNO, ra));
+                    }catch(Exception e)
+                    {
+                        setMsgErro(e.getMessage());
+                    }
                 }
             }
         );
